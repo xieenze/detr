@@ -29,8 +29,9 @@ class DETR(nn.Module):
                          DETR can detect in a single image. For COCO, we recommend 100 queries.
             aux_loss: True if auxiliary decoding losses (loss at each decoder layer) are to be used.
         """
-        super().__init__()
-        self.num_queries = num_queries
+        # super().__init__()
+        super(DETR, self).__init__()
+        self.num_queries = num_queries #一张图最多的物体数, e.g. 100
         self.transformer = transformer
         hidden_dim = transformer.d_model
         self.class_embed = nn.Linear(hidden_dim, num_classes + 1)
@@ -86,7 +87,7 @@ class SetCriterion(nn.Module):
             eos_coef: relative classification weight applied to the no-object category
             losses: list of all the losses to be applied. See get_loss for list of available losses.
         """
-        super().__init__()
+        super(SetCriterion, self).__init__()
         self.num_classes = num_classes
         self.matcher = matcher
         self.weight_dict = weight_dict
@@ -281,7 +282,7 @@ class MLP(nn.Module):
     """ Very simple multi-layer perceptron (also called FFN)"""
 
     def __init__(self, input_dim, hidden_dim, output_dim, num_layers):
-        super().__init__()
+        super(MLP, self).__init__()
         self.num_layers = num_layers
         h = [hidden_dim] * (num_layers - 1)
         self.layers = nn.ModuleList(nn.Linear(n, k) for n, k in zip([input_dim] + h, h + [output_dim]))
